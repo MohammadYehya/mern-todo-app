@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 
 import userRouter from "./routes/userRoute.js"
 import taskRouter from "./routes/taskRoute.js"
-import forgotPasswordRouter from "./routes/forgotPassword.js"
+// import forgotPasswordRouter from "./routes/forgotPassword.js"
 
 //app config
 dotenv.config()
@@ -18,8 +18,10 @@ app.use(express.json())
 app.use(cors())
 
 //db config
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect("mongodb+srv://root:root@cluster0.kwcff.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
+    keepAlive: true,
+    keepAliveInitialDelay: 300000,
 }, (err) => {
     if (err) {
         console.log(err)
@@ -31,7 +33,7 @@ mongoose.connect(process.env.MONGO_URI, {
 //api endpoints
 app.use("/api/user", userRouter)
 app.use("/api/task", taskRouter)
-app.use("/api/forgotPassword", forgotPasswordRouter)
+// app.use("/api/forgotPassword", forgotPasswordRouter)
 
 //listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`))
